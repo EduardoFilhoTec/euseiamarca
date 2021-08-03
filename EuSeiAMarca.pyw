@@ -56,61 +56,39 @@ window.wm_iconphoto(True, imglogo)
 
 
 def Onclick():
-    print('Onclick')
+    # Capturar dados da tela
     host = enHost.get()
     login = enLogin.get()
-    print(host)
-    # LISTA (TUPLE) DE IP DOS CONCENTRADORES
-    address_list = [
-        ('aldeota1', '172.17.0.92'), ('aldeotai', '172.17.0.92'),
-        ('aldeota2', '172.17.0.137'), ('aldeotaii', '172.17.0.137'),
-        ('aquiraz', '172.17.0.125'), ('aquir', '172.17.0.125'),
-        ('coacu', '172.17.0.97'), ('coaçu', '172.17.0.97'),
+    
+    # Lista (tuple) com IPs dos concentradores, podendo usar NOMES (strings) ao invés de apenas IPs
+    address_list = 
+        [
+        ('exemplo1', '172.17.0.92'), ('exemploI', '172.17.0.92'),
+        ('Exemplo2', '172.17.0.137'), ('EXEMPLOII', '172.17.0.137'),
+        ]
 
-        ('damas', '172.17.0.65'),
-        ('diasmacedo', '172.17.0.49'),
-
-        ('esperanca', '172.17.0.87'), ('esperança', '172.17.0.87'),
-
-        ('guararapes', '172.17.0.11'), ('guarara', '172.17.0.11'), ('guararape', '172.17.0.11'),
-
-        ('messejana1', '172.17.0.12'), ('messejanai', '172.17.0.12'), ('josedealencar1', '172.17.0.12'),
-
-        ('messejana2', '172.17.0.96'), ('messejanaii', '172.17.0.96'),
-
-        ('messejanashell', '172.17.0.134'), ('messejananovo', '172.17.0.134'), ('postoms', '172.17.0.134'),
-        ('passare', '172.17.0.8'), ('passaré', '172.17.0.8'),
-        ('pedrabranca', '172.17.0.10'), ('pedra', '172.17.0.10'),
-
-        ('portodunas', '172.17.0.25'),
-        ('portodasdunas', '172.17.0.25'),
-        ('portaldunas', '172.17.0.25'),
-        ('portaldasdunas', '172.17.0.25'),
-
-        ('saogerardo', '172.17.0.105'),
-        ('viasul', '172.20.3.2')]
-
-    # ADICIONA LISTA A PARA UM DICIONARIO
+    # Criando dicionário a partir da lista
     address_dict = dict(address_list)
 
     # iniciando
-    user = 'suporte'  # NOME DE USUARIO PARA LOGAR NO MIKROTIK
-    senha = 'oluap186'  # SENHA PARA LOGAR NO MIKROTIK
+    
+    user = 'usuário'  # NOME DE USUARIO PARA LOGAR NO MIKROTIK
+    senha = 'senha'  # SENHA PARA LOGAR NO MIKROTIK
     ip = 'RECEBE IP'  # IP OU DOMÍNIO DO MIKROTIK
-    concentrador = host.strip()  # RECEBE DADOS DO IP OU NOME DO MK, E TIRA ESPACOS
-    sempontos = str(
-        ''.join(concentrador.split('.')))  # TIRA PONTOS DA VARIAVEL concentrador E PARA PODER CONFERIR SE É IP OU NOME
+    concentrador = host.strip()  # RECEBE DADOS DO IP OU NOME DO MK, E TIRA ESPAÇOS
+    sempontos = str(''.join(concentrador.split('.')))  # TIRA PONTOS DA VARIAVEL concentrador, PARA PODER CONFERIR SE É IP OU NOME
     # print(sempontos)
     pontosespaco = str(
-        ''.join(sempontos.lower().split(' ')))  # TIRA PONTOS E ESPACOS PARA ACHAR O NOME NO DICIONARIO address_list
+        ''.join(sempontos.lower().split(' ')))  # TIRA PONTOS E ESPACOS PARA PROCURAR O NOME NO DICIONARIO address_dict
     # print(pontosespaco)
     espaco = str(
         ''.join(concentrador.lower().split(' ')))  # TIRA ESPACOS PARA RECEBER IP CORRETAMENTE (CASO TENHAM DIGITADO IP)
     # print(espaco)
 
-    if pontosespaco.isnumeric():  # SE SEM PONTOS E ESPACOS SAO NUMERICOS
-        ip = espaco  # RECEBE O IP DIGITADO
+    if pontosespaco.isnumeric():  # SE concentrador SEM PONTOS E SEM ESPAÇOS É APENAS NUMERICO - variavel ip RECEBE A ENTRADA
+        ip = espaco
     else:
+        # PROCURA NO DICIONARIO O NOME DIGITADO, SE ENCONTRAR ip RECEBE O VALOR DA CHAVE
         nome = pontosespaco
         if nome in address_dict:
             ip = address_dict[nome]
